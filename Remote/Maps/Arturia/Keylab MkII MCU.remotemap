@@ -1,0 +1,33 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	Arturia
+Control Surface Model	Keylab MkII MCU
+Map Version	1.0.0
+
+// This is a remote map template for the Arturia Keylab MkII DAW Controls.
+
+
+// =============================================================================
+//	REASON DAW CONTROLS
+// =============================================================================
+
+Scope	Propellerheads	Reason Document
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+Map	Track Solo		Target Track Solo
+Map	Track Mute		Target Track Mute
+Map	Track Record		Target Track Enable Automation Recording
+Map	Track Read		Target Track Enable Monitoring
+Map	Track Write		Target Track Enable Tuner
+Map	Save		Automation As Performance Controllers
+Map	In		Auto-quantize
+Map	Out		Precount On/Off
+Map	Metro		Click On/Off
+Map	Undo		Undo
+Map	Stop		Stop
+Map	Play		Play
+Map	Record		Record
+Map	Rewind		Rewind
+Map	Fast Forward		Fast Forward
+Map	Loop		Loop On/Off
+Map	Right Arrow		Select Next Patch for Target Device
+Map	Left Arrow		Select Prev Patch for Target Device

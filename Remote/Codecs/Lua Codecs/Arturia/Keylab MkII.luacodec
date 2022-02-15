@@ -1,0 +1,44 @@
+version = { 1, 0, 2 }
+
+function remote_supported_control_surfaces()
+	local surfaces =
+	{
+		{
+			manufacturer = "Arturia",
+			model        = "Keylab MkII MCU",
+			source       = "Keylab MkII MCU.lua",
+			picture      = "Keylab MkII MCU.png",
+			in_ports     = {{ description = "MIDI In"  }},
+			out_ports    = {{ description = "MIDI Out" }},
+			has_keyboard = false
+		},
+		{
+			manufacturer = "Arturia",
+			model        = "Keylab MkII",
+			source       = "Keylab MkII.lua",
+			picture      = "Keylab MkII.png",
+			in_ports     = {{ description = "MIDI In"  }},
+			out_ports    = {{ description = "MIDI Out" }},
+		    has_keyboard = true
+		},
+		{
+			manufacturer = "Arturia",
+			model        = "Keylab MkII Keys",
+			source       = "Keylab MkII Keys.lua",
+			picture      = "Keylab MkII.png", 
+			in_ports     = {{ description = "MIDI In"  }},
+			out_ports    = {{ description = "MIDI Out" }},
+			has_keyboard = true, 
+		},
+		{
+			manufacturer = "Arturia",
+			model        = "Keylab MkII Pads",
+			source       = "Keylab MkII Pads.lua",
+			picture      = "Keylab MkII Pads.png",
+			in_ports     = {{ description = "MIDI In"  }},
+			out_ports    = {},
+			has_keyboard = true
+		},
+	}
+	return surfaces
+end

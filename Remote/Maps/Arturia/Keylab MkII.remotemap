@@ -1,0 +1,687 @@
+Propellerhead Remote Mapping File
+File Format Version	1.0.0
+Control Surface Manufacturer	Arturia
+Control Surface Model	Keylab MkII
+Map Version	1.0.0
+
+// This is a remote map template for the Arturia Keylab MkII Keyboard.
+//
+// Keylab MkII user controls:
+// 
+// Encoder1 B1 - Encoder9 B1
+// Encoder1 B2 - Encoder9 B2
+// Encoder1 B3 - Encoder9 B3
+// 
+// Slider1 B1 - Slider9 B1
+// Slider1 B2 - Slider9 B2
+// Slider1 B3 - Slider9 B3
+// 
+// Select1 B1 - Select9 B1
+// Select1 B2 - Select9 B2
+// Select1 B3 - Select9 B3
+
+
+// =============================================================================
+//	REASON UTILITY DEVICES
+// =============================================================================
+
+Scope	Propellerheads	Combinator
+Map	Select1 B1		Button 1
+Map	Select2 B1		Button 2
+Map	Select3 B1		Button 3
+Map	Select4 B1		Button 4
+Map	Select5 B1		Button 5
+Map	Select6 B1		Button 6
+Map	Select7 B1		Button 7
+Map	Select8 B1		Button 8
+Map	Select9 B1		Button 9
+Map	Select1 B2		Button 10
+Map	Select2 B2		Button 11
+Map	Select3 B2		Button 12
+Map	Select4 B2		Button 13
+Map	Select5 B2		Button 14
+Map	Select6 B2		Button 15
+Map	Select7 B2		Button 16
+Map	Select8 B2		Button 17
+Map	Select9 B2		Button 18
+Map	Select1 B3		Button 19
+Map	Select2 B3		Button 20
+Map	Select3 B3		Button 21
+Map	Select4 B3		Button 22
+Map	Select5 B3		Button 23
+Map	Select6 B3		Button 24
+Map	Select7 B3		Button 25
+Map	Select8 B3		Button 26
+Map	Select9 B3		Button 27
+Map	Encoder1 B1		Rotary 1
+Map	Encoder2 B1		Rotary 2
+Map	Encoder3 B1		Rotary 3
+Map	Encoder4 B1		Rotary 4
+Map	Encoder5 B1		Rotary 5
+Map	Encoder6 B1		Rotary 6
+Map	Encoder7 B1		Rotary 7
+Map	Encoder8 B1		Rotary 8
+Map	Encoder9 B1		Rotary 9
+Map	Slider1 B1		Rotary 10
+Map	Slider2 B1		Rotary 11
+Map	Slider3 B1		Rotary 12
+Map	Slider4 B1		Rotary 13
+Map	Slider5 B1		Rotary 14
+Map	Slider6 B1		Rotary 15
+Map	Slider7 B1		Rotary 16
+Map	Slider8 B1		Rotary 17
+Map	Slider9 B1		Rotary 18
+Map	Encoder1 B2		Rotary 19
+Map	Encoder2 B2		Rotary 20
+Map	Encoder3 B2		Rotary 21
+Map	Encoder4 B2		Rotary 22
+Map	Encoder5 B2		Rotary 23
+Map	Encoder6 B2		Rotary 24
+Map	Encoder7 B2		Rotary 25
+Map	Encoder8 B2		Rotary 26
+Map	Encoder9 B2		Rotary 27
+Map	Slider1 B2		Rotary 28
+Map	Slider2 B2		Rotary 29
+Map	Slider3 B2		Rotary 30
+Map	Slider4 B2		Rotary 31
+Map	Slider5 B2		Rotary 32
+
+Scope	Propellerhead Software	se.propellerheads.Pulsar
+Map	Select1 B1		LFO1 Env Sync
+Map	Select2 B1		LFO1 Tempo Sync
+Map	Encoder1 B1		LFO1 Rate Synced
+Map	Encoder2 B1		LFO1 Rate Free
+Map	Encoder3 B1		LFO1 Waveform
+Map	Encoder4 B1		LFO1 Level
+Map	Slider1 B1		LFO1 Phase
+Map	Slider2 B1		LFO1 Shuffle
+Map	Slider3 B1		LFO1 Lag
+Map	Select3 B1		Sync LFO1 to LFO2
+Map	Slider4 B1		LFO2 to LFO1 Rate
+Map	Slider5 B1		LFO2 to LFO1 Level
+Map	Select4 B1		LFO2 Enabled
+Map	Select5 B1		LFO2 Tempo Sync
+Map	Encoder5 B1		LFO2 Rate Synced
+Map	Encoder6 B1		LFO2 Rate Free
+Map	Encoder7 B1		LFO2 Waveform
+Map	Encoder8 B1		LFO2 Level
+Map	Slider6 B1		LFO2 Phase
+Map	Slider7 B1		LFO2 Shuffle
+Map	Slider8 B1		LFO2 Lag
+Map	Select6 B1		LFO2 Triggers Envelope
+Map	Select7 B1		Trig
+Map	Encoder9 B1		Keyboard Track
+Map	Encoder1 B2		Attack
+Map	Encoder2 B2		Release
+Map	Encoder3 B2		LFO1 Env Rate
+Map	Encoder4 B2		LFO1 Env Level
+Map	Encoder5 B2		LFO2 Env Rate
+Map	Encoder6 B2		LFO2 Env Level
+
+Scope	Propellerheads	RPG-8 Monophonic Arpeggiator
+Map	Select1 B1		Arpeggiator Enable
+Map	Select2 B1		Hold
+Map	Select3 B1		Octave Shift Down
+Map	Select4 B1		Octave Shift Up
+Map	Select5 B1		Sync
+Map	Select6 B1		Single Note Repeat
+Map	Select7 B1		Octave
+Map	Select8 B1		Insert
+Map	Select9 B1		Pattern Enable
+Map	Select1 B2		Pattern Step 1
+Map	Select2 B2		Pattern Step 2
+Map	Select3 B2		Pattern Step 3
+Map	Select4 B2		Pattern Step 4
+Map	Select5 B2		Pattern Step 5
+Map	Select6 B2		Pattern Step 6
+Map	Select7 B2		Pattern Step 7
+Map	Select8 B2		Pattern Step 8
+Map	Select9 B2		Pattern Step 9
+Map	Select1 B3		Pattern Step 10
+Map	Select2 B3		Pattern Step 11
+Map	Select3 B3		Pattern Step 12
+Map	Select4 B3		Pattern Step 13
+Map	Select5 B3		Pattern Step 14
+Map	Select6 B3		Pattern Step 15
+Map	Select7 B3		Pattern Step 16
+Map	Select9 B3		Shuffle
+Map	Encoder1 B1		Velocity/Manual
+Map	Encoder2 B1		Octave Shift
+Map	Encoder3 B1		Mode
+Map	Encoder4 B1		Rate
+Map	Encoder5 B1		Gate Length
+Map	Encoder9 B1		Pattern Step Count
+
+Scope	Propellerheads	Mixer 14:2
+Map	Slider9 B1		Master Level
+Map	Slider1 B1		Channel 1 Level
+Map	Slider2 B1		Channel 2 Level
+Map	Slider3 B1		Channel 3 Level
+Map	Slider4 B1		Channel 4 Level
+Map	Slider5 B1		Channel 5 Level
+Map	Slider6 B1		Channel 6 Level
+Map	Slider7 B1		Channel 7 Level
+Map	Slider8 B1		Channel 8 Level
+Map	Encoder1 B1		Channel 1 Pan
+Map	Encoder2 B1		Channel 2 Pan
+Map	Encoder4 B1		Channel 3 Pan
+Map	Encoder3 B1		Channel 4 Pan
+Map	Encoder5 B1		Channel 5 Pan
+Map	Encoder6 B1		Channel 6 Pan
+Map	Encoder7 B1		Channel 7 Pan
+Map	Encoder8 B1		Channel 8 Pan
+Map	Slider1 B2		Channel 9 Level
+Map	Slider2 B2		Channel 10 Level
+Map	Slider3 B2		Channel 11 Level
+Map	Slider4 B2		Channel 12 Level
+Map	Slider5 B2		Channel 13 Level
+Map	Slider6 B2		Channel 14 Level
+Map	Encoder1 B2		Channel 9 Pan
+Map	Encoder2 B2		Channel 10 Pan
+Map	Encoder3 B2		Channel 11 Pan
+Map	Encoder4 B2		Channel 12 Pan
+Map	Encoder5 B2		Channel 13 Pan
+Map	Encoder6 B2		Channel 14 Pan
+
+Scope	Propellerheads	Line Mixer 6:2
+Map	Slider9 B1		Master Level
+Map	Slider1 B1		Channel 1 Level
+Map	Slider2 B1		Channel 2 Level
+Map	Slider3 B1		Channel 3 Level
+Map	Slider4 B1		Channel 4 Level
+Map	Slider5 B1		Channel 5 Level
+Map	Slider6 B1		Channel 6 Level
+Map	Encoder1 B1		Channel 1 Aux Send
+Map	Encoder2 B1		Channel 2 Aux Send
+Map	Encoder3 B1		Channel 3 Aux Send
+Map	Encoder4 B1		Channel 4 Aux Send
+Map	Encoder5 B1		Channel 1 Pan
+Map	Encoder6 B1		Channel 2 Pan
+Map	Encoder7 B1		Channel 3 Pan
+Map	Encoder8 B1		Channel 4 Pan
+Map	Encoder9 B1		Aux Return Level
+
+
+// =============================================================================
+//	REASON INSTRUMENTS
+// =============================================================================
+
+Scope	Propellerheads	ID8 Instrument Device
+Map	Select1 B1		Select Previous Category
+Map	Select2 B1		Select Next Category
+Map	Select3 B1		Select Previous Sound
+Map	Select4 B1		Select Next Sound
+Map	Select5 B1		Sound A
+Map	Select6 B1		Sound B
+Map	Select7 B1		Sound C
+Map	Select8 B1		Sound D
+Map	Encoder1 B1		Parameter 1
+Map	Encoder2 B1		Parameter 2
+Map	Encoder9 B1		Volume
+
+Scope	Propellerhead Software	se.propellerheads.Monotone
+Map	Encoder1 B1		Osc1 Oct
+Map	Encoder2 B1		Osc1 Wave
+Map	Encoder3 B1		Osc Mix
+Map	Encoder4 B1		Osc2 Oct
+Map	Encoder5 B1		Osc2 Wave
+Map	Encoder6 B1		Noise
+Map	Encoder7 B1		Osc Detune
+Map	Encoder8 B1		Pitch LFO Amt
+Map	Encoder9 B1		FM Env Amt
+Map	Slider1 B1		Osc2 Pitch
+Map	Select1 B1		Portamento Mode
+Map	Select2 B1		ReTrig
+Map	Slider2 B1		Portamento
+Map	Slider3 B1		Wheel Filter Amt
+Map	Slider4 B1		Wheel LFO Amt
+Map	Slider5 B1		LFO Rate
+Map	Slider6 B1		LFO Wave
+Map	Slider7 B1		Chorus Amount
+Map	Slider8 B1		Chorus Rate
+Map	Slider9 B1		Chorus Spread
+Map	Encoder1 B2		Filter Drive
+Map	Encoder2 B2		Filter Freq
+Map	Encoder3 B2		Filter Reso
+Map	Encoder4 B2		Filter Env Amount
+Map	Encoder5 B2		Filter Key Amt
+Map	Encoder6 B2		Filter LFO Amt
+Map	Slider1 B2		Filter Attack
+Map	Slider2 B2		Filter Decay
+Map	Slider3 B2		Filter Sustain
+Map	Slider4 B2		Filter Release
+Map	Encoder7 B2		Filter Vel
+Map	Slider5 B2		Amp Attack
+Map	Slider6 B2		Amp Decay
+Map	Slider7 B2		Amp Sustain
+Map	Slider8 B2		Amp Release
+Map	Encoder8 B2		Amp Velocity
+Map	Encoder1 B3		Delay Amount
+Map	Encoder2 B3		Delay Time
+Map	Encoder3 B3		Delay Feedback
+Map	Select1 B3		Delay Pingpong
+Map	Encoder9 B3		Volume
+
+Scope	Propellerheads	SubTractor Analog Synthesizer
+Map	Slider9 B1		Master Level
+Map	Slider1 B1		Filter Env Attack
+Map	Slider2 B1		Filter Env Decay
+Map	Slider3 B1		Filter Env Sustain
+Map	Slider4 B1		Filter Env Release
+Map	Slider5 B1		Amp Env Attack
+Map	Slider6 B1		Amp Env Decay
+Map	Slider7 B1		Amp Env Sustain
+Map	Slider8 B1		Amp Env Release
+Map	Encoder1 B1		Filter Freq
+Map	Encoder2 B1		Filter Res
+Map	Encoder3 B1		LFO1 Rate
+Map	Encoder4 B1		LFO1 Amount
+Map	Encoder5 B1		Filter Env Amount
+Map	Encoder6 B1		Filter Type
+Map	Encoder7 B1		Osc1 Wave
+Map	Encoder8 B1		Osc2 Wave
+Map	Encoder9 B1		Osc1 Phase Diff
+
+Scope	Propellerheads	Thor Polysonic Synthesizer
+Map	Slider9 B1		Master Level
+Map	Encoder1 B1		Filter 1 Freq
+Map	Encoder2 B1		Filter 1 Res
+Map	Encoder3 B1		LFO 1 Rate
+Map	Encoder4 B1		LFO 2 Rate
+Map	Encoder5 B1		Filter 2 Freq
+Map	Encoder6 B1		Filter 2 Res
+Map	Encoder7 B1		Filter 3 Freq
+Map	Encoder8 B1		Filter 3 Res
+Map	Encoder9 B1		Chorus Dry Wet
+Map	Slider1 B1		Filter Env Attack
+Map	Slider2 B1		Filter Env Decay
+Map	Slider3 B1		Filter Env Sustain
+Map	Slider4 B1		Filter Env Release
+Map	Slider5 B1		Amp Env Attack
+Map	Slider6 B1		Amp Env Decay
+Map	Slider7 B1		Amp Env Sustain
+Map	Slider8 B1		Amp Env Release
+
+Scope	Propellerheads	Malstrom Graintable Synthesizer
+Map	Encoder1 B1		Filter A Freq
+Map	Encoder2 B1		Filter A Resonance
+Map	Encoder5 B1		Filter B Freq
+Map	Encoder6 B1		Filter B Resonance
+Map	Slider1 B1		Filter Env Attack
+Map	Slider2 B1		Filter Env Decay
+Map	Slider3 B1		Filter Env Sustain
+Map	Slider4 B1		Filter Env Release
+Map	Slider5 B1		Oscillator A Attack
+Map	Slider6 B1		Oscillator A Decay
+Map	Slider7 B1		Oscillator A Sustain
+Map	Slider8 B1		Oscillator A Release
+Map	Encoder7 B1		Filter Env Amount
+Map	Encoder8 B1		Shaper Amount
+Map	Slider9 B1		Master Level
+Map	Encoder9 B1		Oscillator A Shift
+Map	Encoder3 B1		Modulator A Rate
+Map	Encoder4 B1		Modulator A To Pitch
+
+Scope	Propellerheads	NN19 Digital Sampler
+Map	Slider9 B1		Master Level
+Map	Encoder1 B1		Filter Freq
+Map	Encoder2 B1		Filter Res
+Map	Encoder3 B1		LFO Rate
+Map	Encoder4 B1		LFO Amount
+Map	Encoder5 B1		Filter Env Amount
+Map	Encoder6 B1		Filter Mode
+Map	Encoder7 B1		LFO Wave
+Map	Encoder8 B1		LFO Dest
+Map	Slider1 B1		Filter Env Attack
+Map	Slider2 B1		Filter Env Decay
+Map	Slider3 B1		Filter Env Sustain
+Map	Slider4 B1		Filter Env Release
+Map	Slider5 B1		Amp Env Attack
+Map	Slider6 B1		Amp Env Decay
+Map	Slider7 B1		Amp Env Sustain
+Map	Slider8 B1		Amp Env Release
+Map	Encoder9 B1		Stereo Spread
+
+Scope	Propellerheads	NN-XT Advanced Sampler
+Map	Slider9 B1		Master Volume
+Map	Encoder1 B1		Filter Freq
+Map	Encoder2 B1		Filter Res
+Map	Slider1 B1		Amp Env Attack
+Map	Slider2 B1		Amp Env Decay
+Map	Slider4 B1		Amp Env Release
+Map	Slider6 B1		Mod env Decay
+
+Scope	Propellerheads	Dr.REX Loop Player
+Map	Slider9 B1		Master Level
+Map	Encoder1 B1		Filter Freq
+Map	Encoder2 B1		Filter Res
+Map	Encoder3 B1		LFO1 Rate
+Map	Encoder4 B1		LFO1 Amount
+Map	Encoder5 B1		Filter Env Amount
+Map	Encoder6 B1		Filter Mode
+Map	Encoder7 B1		LFO1 Wave
+Map	Encoder8 B1		LFO1 Dest
+Map	Slider1 B1		Filter Env Attack
+Map	Slider2 B1		Filter Env Decay
+Map	Slider3 B1		Filter Env Sustain
+Map	Slider4 B1		Filter Env Release
+Map	Slider5 B1		Amp Env Attack
+Map	Slider6 B1		Amp Env Decay
+Map	Slider7 B1		Amp Env Sustain
+Map	Slider8 B1		Amp Env Release
+
+Scope	Propellerheads	Redrum Drum Computer
+Map	Slider9 B1		Master Level
+Map	Slider1 B1		Drum 1 Level
+Map	Slider2 B1		Drum 2 Level
+Map	Slider3 B1		Drum 3 Level
+Map	Slider4 B1		Drum 4 Level
+Map	Slider5 B1		Drum 5 Level
+Map	Slider6 B1		Drum 6 Level
+Map	Slider7 B1		Drum 7 Level
+Map	Slider8 B1		Drum 8 Level
+Map	Encoder1 B1		Drum 1 Pan
+Map	Encoder2 B1		Drum 2 Pan
+Map	Encoder3 B1		Drum 3 Pan
+Map	Encoder4 B1		Drum 4 Pan
+Map	Encoder5 B1		Drum 5 Pan
+Map	Encoder6 B1		Drum 6 Pan
+Map	Encoder7 B1		Drum 7 Pan
+Map	Encoder8 B1		Drum 8 Pan
+Map	Slider1 B2		Drum 9 Level
+Map	Slider2 B2		Drum 10 Level
+Map	Encoder1 B2		Drum 9 Pan
+Map	Encoder2 B2		Drum 10 Pan
+
+Scope	Propellerheads	Kong Drum Designer
+Map	Slider9 B1		Master Level
+Map	Slider1 B1		Drum 1 Level
+Map	Slider2 B1		Drum 2 Level
+Map	Slider3 B1		Drum 3 Level
+Map	Slider4 B1		Drum 4 Level
+Map	Slider5 B1		Drum 5 Level
+Map	Slider6 B1		Drum 6 Level
+Map	Slider7 B1		Drum 7 Level
+Map	Slider8 B1		Drum 8 Level
+Map	Slider1 B2		Drum 9 Level
+Map	Slider2 B2		Drum 10 Level
+Map	Slider3 B2		Drum 11 Level
+Map	Slider4 B2		Drum 12 Level
+Map	Slider5 B2		Drum 13 Level
+Map	Slider6 B2		Drum 14 Level
+Map	Slider7 B2		Drum 15 Level
+Map	Slider8 B2		Drum 16 Level
+Map	Encoder1 B1		Drum 1 Pan
+Map	Encoder2 B1		Drum 2 Pan
+Map	Encoder3 B1		Drum 3 Pan
+Map	Encoder4 B1		Drum 4 Pan
+Map	Encoder5 B1		Drum 5 Pan
+Map	Encoder6 B1		Drum 6 Pan
+Map	Encoder7 B1		Drum 7 Pan
+Map	Encoder8 B1		Drum 8 Pan
+Map	Encoder1 B2		Drum 9 Pan
+Map	Encoder2 B2		Drum 10 Pan
+Map	Encoder4 B2		Drum 11 Pan
+Map	Encoder3 B2		Drum 12 Pan
+Map	Encoder5 B2		Drum 13 Pan
+Map	Encoder6 B2		Drum 14 Pan
+Map	Encoder7 B2		Drum 15 Pan
+Map	Encoder8 B2		Drum 16 Pan
+
+
+// =============================================================================
+//	REASON EFFECT DEVICES
+// =============================================================================
+
+Scope	Propellerheads	RV7000 Advanced Reverb
+Map	Slider9 B1		Dry/Wet
+Map	Encoder1 B1		Decay
+Map	Encoder2 B1		HF Damp
+Map	Encoder3 B1		Hi EQ
+Map	Slider1 B1		Soft Knob 1
+Map	Slider2 B1		Soft Knob 2
+Map	Slider3 B1		Soft Knob 3
+Map	Slider4 B1		Soft Knob 4
+Map	Slider5 B1		Soft Knob 5
+Map	Slider6 B1		Soft Knob 6
+Map	Slider7 B1		Soft Knob 7
+Map	Slider8 B1		Soft Knob 8
+
+Scope	Propellerheads	Scream 4 Distortion
+Map	Slider9 B1		Master Level
+Map	Encoder1 B1		Damage Control
+Map	Encoder2 B1		Damage Type
+Map	Encoder3 B1		Parameter 1
+Map	Encoder4 B1		Parameter 2
+Map	Encoder5 B1		Body Resonance
+Map	Encoder6 B1		Body Scale
+Map	Encoder7 B1		Body Auto
+Map	Encoder8 B1		Body Type
+Map	Slider1 B1		Cut Lo
+Map	Slider2 B1		Cut Mid
+Map	Slider3 B1		Cut Hi
+Map	Select1 B1		Damage On/Off
+Map	Select2 B1		Cut On/Off
+Map	Select3 B1		Body On/Off
+
+Scope	Propellerheads	BV512 Digital Vocoder
+Map	Encoder9 B1		Dry/Wet
+Map	Encoder1 B1		Band Count
+Map	Encoder2 B1		Attack
+Map	Encoder3 B1		Decay
+Map	Encoder5 B1		Vocoder/Equalizer
+Map	Encoder6 B1		Shift
+Map	Encoder7 B1		HF Emphasis
+Map	Slider1 B1		Band Level 1
+Map	Slider2 B1		Band Level 2
+Map	Slider3 B1		Band Level 3
+Map	Slider4 B1		Band Level 4
+Map	Slider5 B1		Band Level 5
+Map	Slider6 B1		Band Level 6
+Map	Slider7 B1		Band Level 7
+Map	Slider8 B1		Band Level 8
+Map	Slider9 B1		Band Level 9
+Map	Slider1 B2		Band Level 10
+Map	Slider2 B2		Band Level 11
+Map	Slider3 B2		Band Level 12
+Map	Slider4 B2		Band Level 13
+Map	Slider5 B2		Band Level 14
+Map	Slider6 B2		Band Level 15
+Map	Slider7 B2		Band Level 16
+Map	Slider8 B2		Band Level 17
+Map	Slider9 B2		Band Level 18
+
+Scope	Propellerheads	MClass Equalizer
+Map	Encoder1 B1		Low Shelf Frequency
+Map	Slider1 B1		Low Shelf Gain
+Map	Encoder5 B1		Low Shelf Q
+Map	Encoder2 B1		Parametric 1 Frequency
+Map	Slider2 B1		Parametric 1 Gain
+Map	Encoder6 B1		Parametric 1 Q
+Map	Encoder3 B1		Parametric 2 Frequency
+Map	Slider3 B1		Parametric 2 Gain
+Map	Encoder7 B1		Parametric 2 Q
+Map	Encoder4 B1		Hi Shelf Frequency
+Map	Slider4 B1		Hi Shelf Gain
+Map	Encoder8 B1		Hi Shelf Q
+
+Scope	Propellerheads	MClass Stereo Imager
+Map	Encoder1 B1		Low Width
+Map	Encoder2 B1		X-Over Frequency
+Map	Encoder3 B1		High Width
+Map	Encoder4 B1		Solo Mode
+
+Scope	Propellerheads	MClass Compressor
+Map	Encoder1 B1		Input Gain
+Map	Encoder2 B1		Threshold
+Map	Encoder3 B1		Ratio
+Map	Encoder4 B1		Attack
+Map	Encoder9 B1		Release
+Map	Slider9 B1		Output Gain
+
+Scope	Propellerheads	MClass Maximizer
+Map	Encoder1 B1		Input Gain
+Map	Encoder2 B1		Attack Speed
+Map	Encoder3 B1		Release Speed
+Map	Encoder4 B1		Output Gain
+Map	Encoder9 B1		Soft Clip Amount
+
+Scope	Propellerheads	RV-7 Digital Reverb
+Map	Encoder1 B1		Algorithm
+Map	Encoder2 B1		Size
+Map	Encoder3 B1		Decay
+Map	Encoder4 B1		Damping
+Map	Slider9 B1		Dry/Wet
+
+Scope	Propellerheads	DDL-1 Digital Delay Line
+Map	Encoder1 B1		DelayTime (steps)
+Map	Encoder2 B1		DelayTime (ms)
+Map	Encoder3 B1		Feedback
+Map	Encoder4 B1		Pan
+Map	Slider9 B1		Dry/Wet Balance
+
+Scope	Propellerheads	D-11 Foldback Distortion
+Map	Encoder1 B1		Amount
+Map	Encoder2 B1		Foldback
+
+Scope	Propellerheads	ECF-42 Envelope Controlled Filter
+Map	Encoder1 B1		Frequency
+Map	Encoder2 B1		Resonance
+Map	Encoder3 B1		Env Amount
+Map	Encoder4 B1		Velocity
+Map	Encoder9 B1		Mode
+Map	Slider1 B1		Attack
+Map	Slider2 B1		Decay
+Map	Slider3 B1		Sustain
+Map	Slider4 B1		Release
+
+Scope	Propellerheads	CF-101 Chorus/Flanger
+Map	Encoder1 B1		Delay
+Map	Encoder2 B1		Feedback
+Map	Encoder3 B1		Rate
+Map	Encoder4 B1		Modulation Amount
+
+Scope	Propellerheads	PH-90 Phaser
+Map	Encoder1 B1		Frequency
+Map	Encoder2 B1		Split
+Map	Encoder3 B1		Width
+Map	Encoder4 B1		Rate
+Map	Encoder9 B1		Frequency Modulation
+Map	Encoder5 B1		Feedback
+
+Scope	Propellerheads	UN-16 Unison
+Map	Encoder1 B1		Voice Count
+Map	Encoder2 B1		Detune
+Map	Slider9 B1		Dry/Wet
+
+Scope	Propellerheads	COMP-01 Compressor/Limiter
+Map	Encoder1 B1		Ratio
+Map	Encoder2 B1		Threshold
+Map	Encoder3 B1		Attack
+Map	Encoder4 B1		Release
+Map	Slider9 B1		Gain
+
+Scope	Propellerheads	PEQ-2 Two Band Parametric EQ
+Map	Encoder1 B1		Filter A Freq
+Map	Encoder2 B1		Filter A Q
+Map	Encoder3 B1		Filter A Gain
+Map	Encoder5 B1		Filter B Freq
+Map	Encoder6 B1		Filter B Q
+Map	Encoder7 B1		Filter B Gain
+
+Scope	Propellerheads	Alligator
+Define Group	Keyboard Shortcut Variations	filters1	filters2	filters3
+Map	Slider9 B1		Master Volume
+Map	Encoder4 B1		High Pass LFO Amount			filters1
+Map	Encoder1 B1		High Pass Frequency			filters1
+Map	Encoder2 B1		High Pass Resonance			filters1
+Map	Encoder5 B1		High Pass Env Amount			filters1
+Map	Encoder3 B1		High Pass Drive Amount			filters1
+Map	Encoder6 B1		High Pass Phaser Amount			filters1
+Map	Encoder7 B1		High Pass Delay Amount			filters1
+Map	Encoder8 B1		High Pass Pan			filters1
+Map	Encoder4 B1		Band Pass LFO Amount			filters2
+Map	Encoder1 B1		Band Pass Frequency			filters2
+Map	Encoder2 B1		Band Pass Resonance			filters2
+Map	Encoder5 B1		Band Pass Env Amount			filters2
+Map	Encoder3 B1		Band Pass Drive Amount			filters2
+Map	Encoder6 B1		Band Pass Phaser Amount			filters2
+Map	Encoder7 B1		Band Pass Delay Amount			filters2
+Map	Encoder8 B1		Band Pass Pan			filters2
+Map	Encoder4 B1		Low Pass LFO Amount			filters3
+Map	Encoder1 B1		Low Pass Frequency			filters3
+Map	Encoder2 B1		Low Pass Resonance			filters3
+Map	Encoder5 B1		Low Pass Env Amount			filters3
+Map	Encoder3 B1		Low Pass Drive Amount			filters3
+Map	Encoder6 B1		Low Pass Phaser Amount			filters3
+Map	Encoder7 B1		Low Pass Delay Amount			filters3
+Map	Encoder8 B1		Low Pass Pan			filters3
+Map	Slider1 B1		Filter Env Attack
+Map	Slider2 B1		Filter Env Decay
+Map	Slider4 B1		Filter Env Release
+Map	Slider5 B1		Amp Env Attack
+Map	Slider6 B1		Amp Env Decay
+Map	Slider8 B1		Amp Env Release
+
+Scope	Propellerheads	The Echo
+Map	Slider9 B1		Dry/Wet Balance
+Map	Slider1 B1		Delay Time
+Map	Slider2 B1		Right Ch Time Offset
+Map	Slider3 B1		Feedback
+Map	Slider4 B1		Right Ch Feedback Offset
+Map	Encoder5 B1		Drive Amount
+Map	Encoder6 B1		Drive Type
+Map	Encoder7 B1		Envelope
+Map	Encoder8 B1		Wobble
+Map	Slider5 B1		Ping-Pong Mode
+Map	Slider6 B1		Ping-Pong Pan
+Map	Slider7 B1		Diffuse Spread
+Map	Slider8 B1		Diffuse Amount
+Map	Encoder1 B1		Filter Frequency
+Map	Encoder2 B1		Filter Resonance
+Map	Encoder3 B1		LFO Rate
+Map	Encoder4 B1		LFO Amount
+
+Scope	Propellerheads	Pulveriser
+Map	Slider9 B1		Volume
+Map	Encoder1 B1		Filter Frequency
+Map	Encoder2 B1		Peak
+Map	Encoder4 B1		Tremor to Frequency
+Map	Encoder3 B1		Tremor Rate
+Map	Encoder5 B1		Squash
+Map	Encoder6 B1		Dirt
+Map	Encoder7 B1		Tremor Waveform
+Map	Encoder8 B1		Tremor to Volume
+Map	Encoder9 B1		Blend
+Map	Slider1 B1		Follower Threshold
+Map	Slider2 B1		Follower Attack
+Map	Slider3 B1		Follower Release
+Map	Slider4 B1		Follower to Rate
+Map	Slider5 B1		Follower to Frequency
+
+Scope	Propellerheads	Neptune Pitch Adjuster
+Map	Encoder1 B1		Correction Speed
+Map	Encoder2 B1		Preserve Expression
+Map	Encoder4 B1		Formant Shift
+Map	Slider1 B1		Pitched Signal Level
+Map	Slider2 B1		Voice Synth Level
+Map	Encoder3 B1		Vibrato rate
+
+
+// =============================================================================
+//	THIRDPARTY DEVICES
+// =============================================================================
+
+Scope	AudioRealism	se.audiorealism.abl3
+Map	Select1 B1		Waveform
+Map	Encoder1 B1		Tuning
+Map	Encoder2 B1		Cutoff
+Map	Encoder3 B1		Resonance
+Map	Encoder4 B1		Envmod
+Map	Encoder5 B1		Decay
+Map	Encoder6 B1		Accent
+Map	Encoder9 B1		Volume
+Map	Slider1 B1		Hipass Freq
+Map	Slider2 B1		Overdrive
+Map	Slider3 B1		Distortion
+Map	Slider9 B1		Gate Trim
