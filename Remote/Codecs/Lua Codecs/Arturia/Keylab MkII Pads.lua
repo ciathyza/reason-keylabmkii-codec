@@ -1,5 +1,5 @@
 -- Reason ReMote Codec for Arturia Keylab MkII Drum Pads.
--- Version 1.2
+-- Version 1.0.3
 -- V1.0 Timothy Rylatt - 15/11/2020
 -- V1.2 Changes Ciathyza 14/02/2022
 

@@ -1,8 +1,8 @@
 Propellerhead Remote Mapping File
 File Format Version	1.0.0
 Control Surface Manufacturer	Arturia
-Control Surface Model	Keylab MkII
-Map Version	1.0.0
+Control Surface Model	Keylab mkII
+Map Version	1.0.3
 
 // This is a remote map template for the Arturia Keylab MkII Keyboard.
 //

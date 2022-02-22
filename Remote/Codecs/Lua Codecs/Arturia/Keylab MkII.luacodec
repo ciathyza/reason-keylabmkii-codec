@@ -1,44 +1,48 @@
-version = { 1, 0, 2 }
+version = { 1, 0, 3 }
 
 function remote_supported_control_surfaces()
 	local surfaces =
 	{
 		{
-			manufacturer = "Arturia",
-			model        = "Keylab MkII MCU",
-			source       = "Keylab MkII MCU.lua",
-			picture      = "Keylab MkII MCU.png",
-			in_ports     = {{ description = "MIDI In"  }},
-			out_ports    = {{ description = "MIDI Out" }},
-			has_keyboard = false
+			manufacturer    = "Arturia",
+			model           = "Keylab mkII MCU",
+			source          = "Keylab mkII MCU.lua",
+			picture         = "Keylab mkII MCU.png",
+			in_ports        = {{ description = "MIDI In"                   }},
+			out_ports       = {{ description = "MIDI Out", optional = true }},
+		    setup_info_text = "Used for the Keylab mkII DAW transport controls.",
+			has_keyboard    = false
 		},
 		{
-			manufacturer = "Arturia",
-			model        = "Keylab MkII",
-			source       = "Keylab MkII.lua",
-			picture      = "Keylab MkII.png",
-			in_ports     = {{ description = "MIDI In"  }},
-			out_ports    = {{ description = "MIDI Out" }},
-		    has_keyboard = true
+			manufacturer    = "Arturia",
+			model           = "Keylab mkII",
+			source          = "Keylab mkII.lua",
+			picture         = "Keylab mkII.png",
+			in_ports        = {{ description = "MIDI In"                   }},
+			out_ports       = {{ description = "MIDI Out", optional = true }},
+		    setup_info_text = "Used for the Keylab mkII user knobs, sliders, and button banks.",
+		    has_keyboard    = true
 		},
 		{
-			manufacturer = "Arturia",
-			model        = "Keylab MkII Keys",
-			source       = "Keylab MkII Keys.lua",
-			picture      = "Keylab MkII.png", 
-			in_ports     = {{ description = "MIDI In"  }},
-			out_ports    = {{ description = "MIDI Out" }},
-			has_keyboard = true, 
+			manufacturer    = "Arturia",
+			model           = "Keylab mkII Keys",
+			source          = "Keylab mkII Keys.lua",
+			picture         = "Keylab mkII Keys.png",
+			in_ports        = {{ description = "MIDI In"                   }},
+			out_ports       = {{ description = "MIDI Out", optional = true }},
+		    setup_info_text = "Used for the Keylab mkII piano keys and performance controls.",
+		    has_keyboard    = true
 		},
 		{
-			manufacturer = "Arturia",
-			model        = "Keylab MkII Pads",
-			source       = "Keylab MkII Pads.lua",
-			picture      = "Keylab MkII Pads.png",
-			in_ports     = {{ description = "MIDI In"  }},
-			out_ports    = {},
-			has_keyboard = true
-		},
+			manufacturer    = "Arturia",
+			model           = "Keylab mkII Pads",
+			source          = "Keylab mkII Pads.lua",
+			picture         = "Keylab mkII Pads.png",
+			in_ports        = {{ description = "MIDI In"                   }},
+			out_ports       = {{ description = "MIDI Out", optional = true }},
+		    setup_info_text = "Used for the Keylab mkII drum pads.",
+		    has_keyboard    = true
+		}
 	}
 	return surfaces
 end
