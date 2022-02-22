@@ -1,22 +1,41 @@
 --[[
-	Surface:	Keyboard Arturia Keylab MKII
-	Developer:	Thierry Fraudet / Modified for MKII by Wade Carson
-	Version:	1.3
-	Date:		21/12/2019
-
+	Surface:	Keyboard Arturia Keylab mkII
+	Developer:	Ciathyza
+	Version:	2.0.0
+	Date:		2022/02/22
 ]]
 
-g_lcd_line1_index = 1
-g_lcd_line2_index = 2
-g_lcd_line1_new_text = ""
-g_lcd_line1_old_text = ""
-g_lcd_line2_new_text = ""
-g_lcd_line2_old_text = ""
-g_preset_jog_wheel_index = 44
-g_cat_jog_wheel_index = 51
+----------------------------------------------- Global Properties -------------------------------------------------
+
+g_lcd_line1_index         = 1
+g_lcd_line2_index         = 2
+g_lcd_line1_new_text      = ""
+g_lcd_line1_old_text      = ""
+g_lcd_line2_new_text      = ""
+g_lcd_line2_old_text      = ""
+g_preset_jog_wheel_index  = 44
+g_cat_jog_wheel_index     = 51
 g_quartet_effect_selected = ""
 g_sweeper_effect_selected = ""
 
+encoder_patterns =
+{
+	"b? 4a xx", -- pan-1
+	"b? 47 xx", -- pan-2
+	"b? 4c xx", -- pan-3
+	"b? 4d xx", -- pan-4
+	"b? 5d xx", -- pan-5
+	"b? 12 xx", -- pan-6
+	"b? 13 xx", -- pan-7
+	"b? 10 xx", -- pan-8
+	"b? 11 xx", -- master pan
+}
+
+g_rv7_algorithms = { "Hall", "Large Hall", "Hall 2", "Large Room", "Medium Room", "Small Room", "Gated", "Low Density", "Stereo Echoes", "Pan Room" }
+g_matrix_bank    = { "A", "B", "C", "D" }
+
+
+----------------------------------------------- Remote Init -------------------------------------------------------
 
 function remote_init(manufacturer, model)
 	local items =
@@ -235,31 +254,7 @@ function remote_init(manufacturer, model)
 end
 
 
-encoder_patterns =
-{
-	"b? 4a xx", -- pan-1
-	"b? 47 xx", -- pan-2
-	"b? 4c xx", -- pan-3
-	"b? 4d xx", -- pan-4
-	"b? 5d xx", -- pan-5
-	"b? 12 xx", -- pan-6
-	"b? 13 xx", -- pan-7
-	"b? 10 xx", -- pan-8
-	"b? 11 xx", -- master pan
-}
-
-
--- Return the encoder that has been activated (1 to 8 and 9 for the master-pan) or -1 if any
-function incomingMidiMessageFromEncoder(event)
-	for key,value in ipairs(encoder_patterns) do
-		ret = remote.match_midi(value,event)
-		if ret~=nil then
-			return key
-		end
-	end
-	return -1
-end
-
+----------------------------------------------- Control Input Logic -----------------------------------------------
 
 function remote_process_midi(event)  -- handle incoming midi event
 	--test if preset jog-wheel turn right
@@ -311,10 +306,6 @@ function remote_process_midi(event)  -- handle incoming midi event
 	end
 	return false
 end
-
-
-g_rv7_algorithms = { "Hall", "Large Hall", "Hall 2", "Large Room", "Medium Room", "Small Room", "Gated", "Low Density","Stereo Echoes","Pan Room"}
-g_matrix_bank = { "A", "B", "C", "D"}
 
 
 function remote_set_state(changed_items) --handle incoming changes sent by Reason
@@ -369,26 +360,22 @@ end
 
 function remote_deliver_midi(max_bytes, port)
 	local ret_events={}
-
 	-- if there is a new message to display
 	if (g_lcd_line1_new_text ~= g_lcd_line1_old_text) then
 		g_lcd_line1_old_text = g_lcd_line1_new_text
 		table.insert(ret_events,make_lcd_midi_message(g_lcd_line1_new_text, g_lcd_line2_old_text))
 	end
-
 	-- if there is a new message to display
 	if (g_lcd_line2_new_text ~= g_lcd_line2_old_text) then
 		g_lcd_line2_old_text = g_lcd_line2_new_text
 		table.insert(ret_events,make_lcd_midi_message(g_lcd_line1_old_text, g_lcd_line2_new_text))
 	end
-
 	return ret_events
 end
 
 
-function remote_probe(manufacturer,model,prober)
+function remote_probe(manufacturer, model, prober)
 	-- Arturia Manufacturer SysEx ID Numbers is: 00 20 6b
-
 	-- Need to be rework, for hardware with multiple ports must be done programaticaly (see Remote SDK documentation page 26 & 27)
 	assert(model == "Keylab61 Essential")
 	local controlRequest="f0 7e 7f 06 01 f7"  -- sysex de demande d'identification
@@ -401,20 +388,37 @@ end
 
 
 function remote_prepare_for_use()
-	local retEvents={
-		-- Display message on LCD
-		make_lcd_midi_message("Reason Remote", "connected"),
-	}
+	-- Display message on LCD
+	local retEvents = { make_lcd_midi_message("Reason Remote", "connected") }
 	return retEvents
 end
 
 
 function remote_release_from_use()
-	local retEvents={
-		-- Display message on LCD
-		make_lcd_midi_message("Reason Remote", "disconnected"),
-	}
+	-- Display message on LCD
+	local retEvents = { make_lcd_midi_message("Reason Remote", "disconnected") }
 	return retEvents
+end
+
+
+function make_lcd_midi_message(line1, line2)
+	local sysex = "f0 00 20 6b 7f 42 04 00 60 01" .. stringToHex(string.sub(line1,1,16)) .. " 00 02" .. stringToHex(string.sub(line2,1,16)) .. " 00 f7"
+	local event=remote.make_midi(sysex)
+	return event
+end
+
+
+----------------------------------------------- Global Helpers ----------------------------------------------------
+
+-- Return the encoder that has been activated (1 to 8 and 9 for the master-pan) or -1 if any
+function incomingMidiMessageFromEncoder(event)
+	for key,value in ipairs(encoder_patterns) do
+		ret = remote.match_midi(value,event)
+		if ret~=nil then
+			return key
+		end
+	end
+	return -1
 end
 
 
@@ -430,13 +434,6 @@ function stringToHex(text)
 end
 
 
-function make_lcd_midi_message(line1, line2)
-	local sysex = "f0 00 20 6b 7f 42 04 00 60 01" .. stringToHex(string.sub(line1,1,16)) .. " 00 02" .. stringToHex(string.sub(line2,1,16)) .. " 00 f7"
-	local event=remote.make_midi(sysex)
-	return event
-end
-
-
-function string.starts(String,Start)
+function string.starts(String, Start)
 	return string.sub(String,1,string.len(Start)) == Start
 end

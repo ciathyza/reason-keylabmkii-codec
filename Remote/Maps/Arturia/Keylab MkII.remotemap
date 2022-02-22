@@ -26,7 +26,6 @@ Map	part2-prev		Target Next Track
 Map	lcd-1		device name
 Map	lcd-2		patch name
 
-
 Scope	Propellerheads	Combinator
 //	Control Surface Item	Key	Remotable Item	Scale	Mode
 Define Group	Keyboard Shortcut Variations	var1	var2
@@ -63,8 +62,8 @@ Map	Fader-6		Rotary 30			var2
 Map	Fader-7		Rotary 31			var2
 Map	Fader-8		Rotary 32			var2
 Map	preset-jog-wheel		Select Patch Delta
-Map	lcd-1		"Combinator var1"			var1
-Map	lcd-1		"Combinator var2"			var2
+Map	lcd-1		"Combinator Part1"			var1
+Map	lcd-1		"Combinator Part2"			var2
 Map	lcd-2		Patch Name
 
 Scope	Propellerheads	Mixer 14:2
@@ -220,8 +219,8 @@ Map	fader-6		Oscillator B Decay			OscB
 Map	fader-7		Oscillator B Sustain			OscB
 Map	fader-8		Oscillator B Release			OscB
 Map	preset-jog-wheel		Select Patch Delta
-Map	lcd-1		"Malstrom (Osc-A)"			OscA
-Map	lcd-1		"Malstrom (Osc-B)"			OscB
+Map	lcd-1		"Malstrom (Osc A)"			OscA
+Map	lcd-1		"Malstrom (Osc B)"			OscB
 Map	lcd-2		Patch Name
 
 Scope	Propellerheads	NN19 Digital Sampler
@@ -357,8 +356,8 @@ Map	pan-6		Drum 14 Pan			Channel 9 to 16
 Map	pan-7		Drum 15 Pan			Channel 9 to 16
 Map	pan-8		Drum 16 Pan			Channel 9 to 16
 Map	preset-jog-wheel		Select Patch Delta
-Map	lcd-1		"Kong - Ch1-8"			Channel 1 to 8
-Map	lcd-1		"Kong - Ch9-16"			Channel 9 to 16
+Map	lcd-1		"Kong (Ch 1-8)"			Channel 1 to 8
+Map	lcd-1		"Kong (Ch 9-16)"			Channel 9 to 16
 Map	lcd-2		Patch Name
 
 Scope	Propellerhead Software	se.propellerheads.Europa

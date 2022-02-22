@@ -1,7 +1,9 @@
--- Reason ReMote Codec for Arturia Keylab MkII Drum Pads.
--- Version 1.2
--- V1.0 Timothy Rylatt - 15/11/2020
--- V1.2 Changes Ciathyza 14/02/2022
+--[[
+    Surface:    Arturia Keylab mkII Drum Pads
+    Developer:  Ciathyza
+    Version:    2.0.0
+    Date:       2022/02/22
+]]
 
 
 ----------------------------------------------- Remote Init -------------------------------------------------------
@@ -28,7 +30,7 @@ end
 ----------------------------------------------- Control Input Logic -----------------------------------------------
 
 function remote_probe()
-    local controlRequest="F0 7E 7F 06 01 F7"
-    local controlResponse="F0 7E 7F 06 02 00 20 6B 02 00 05 64 ?? ?? ?? ?? F7"
-    return { request=controlRequest, response=controlResponse }
+    local controlRequest =  "F0 7E 7F 06 01 F7"
+    local controlResponse = "F0 7E 7F 06 02 00 20 6B 02 00 05 64 ?? ?? ?? ?? F7"
+    return { request = controlRequest, response = controlResponse }
 end
