@@ -1,4 +1,4 @@
-version = { 1, 0, 3 }
+version = { 1, 2, 0 }
 
 function remote_supported_control_surfaces()
 	local surfaces =
@@ -20,17 +20,7 @@ function remote_supported_control_surfaces()
 			picture         = "Keylab mkII.png",
 			in_ports        = {{ description = "MIDI In"                   }},
 			out_ports       = {{ description = "MIDI Out", optional = true }},
-		    setup_info_text = "Used for the Keylab mkII user knobs, sliders, and button banks.",
-		    has_keyboard    = true
-		},
-		{
-			manufacturer    = "Arturia",
-			model           = "Keylab mkII Keys",
-			source          = "Keylab mkII Keys.lua",
-			picture         = "Keylab mkII Keys.png",
-			in_ports        = {{ description = "MIDI In"                   }},
-			out_ports       = {{ description = "MIDI Out", optional = true }},
-		    setup_info_text = "Used for the Keylab mkII piano keys and performance controls.",
+		    setup_info_text = "Used for the Keylab mkII keys, user knobs, sliders, and button banks.",
 		    has_keyboard    = true
 		},
 		{

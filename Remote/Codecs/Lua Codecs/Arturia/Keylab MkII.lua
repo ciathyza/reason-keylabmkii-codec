@@ -1,331 +1,442 @@
--- Reason ReMote Codec for Arturia Keylab MkII User section (encoders, sliders and buttons).
--- NOTE: Keylab DAW mode must be set to Standard MCU. DAW controls are also available when in User mode as they output from separate port.
--- Version 1.0.3
--- V1.0 Timothy Rylatt - 15/11/2020
--- V1.2 Changes Ciathyza 14/02/2022
+--[[
+	Surface:	Keyboard Arturia Keylab MKII
+	Developer:	Thierry Fraudet / Modified for MKII by Wade Carson
+	Version:	1.3
+	Date:		21/12/2019
 
------------------------------------------------ Global Properties -------------------------------------------------
+]]
 
--- Position of first analog control in the items table.
-gFirstAnalogIndex = 28
+g_lcd_line1_index = 1
+g_lcd_line2_index = 2
+g_lcd_line1_new_text = ""
+g_lcd_line1_old_text = ""
+g_lcd_line2_new_text = ""
+g_lcd_line2_old_text = ""
+g_preset_jog_wheel_index = 44
+g_cat_jog_wheel_index = 51
+g_quartet_effect_selected = ""
+g_sweeper_effect_selected = ""
 
--- "Analogs" indicates non-encoder analog controls and refers to sliders on the Keylab MkII.
-gNumberOfAnalogs = 27
 
--- Acceptable difference between the first reported value from a control and the machine state for the 2 to be considered synchronized.
-gStartupLiveband = 3
+function remote_init(manufacturer, model)
+	local items =
+	{
+		{name="lcd-1", output="text"},
+		{name="lcd-2", output="text"},
 
--- Stores current position/value of control on hardware.
-gAnalogPhysicalState = {}
+		{name="Keyboard", input="keyboard"},
+		{name="Channel Pressure", input="value", min=0, max=127},
+		{name="Mod Wheel", input="value", min=0, max=127},
+		{name="Pitch Bend", input="value", min=0, max=16384},
+		{name="Expression", input="value", min=0, max=127},
+		{name="Breath", input="value", min=0, max=127},
+		{name="Damper Pedal", input="value", min=0, max=127},
 
--- Stores value of connected software item.
-gAnalogMachineState  = {}
+		{name="pad-1", input="button", output="value"},
+		{name="pad-2", input="button", output="value"},
+		{name="pad-3", input="button", output="value"},
+		{name="pad-4", input="button", output="value"},
+		{name="pad-5", input="button", output="value"},
+		{name="pad-6", input="button", output="value"},
+		{name="pad-7", input="button", output="value"},
+		{name="pad-8", input="button", output="value"},
+		{name="pad-9", input="button", output="value"},
+		{name="pad-10", input="button", output="value"},
+		{name="pad-11", input="button", output="value"},
+		{name="pad-12", input="button", output="value"},
+		{name="pad-13", input="button", output="value"},
+		{name="pad-14", input="button", output="value"},
+		{name="pad-15", input="button", output="value"},
+		{name="pad-16", input="button", output="value"},
 
--- Difference between physical state of control and software value (positive numbers indicate physical value is greater,
--- nil indicates mismatch assumption due to unknown physical state at startup).
-gAnalogMismatch      = {}
+		{name="fader-1", input="value", output="value", min=0, max=127},
+		{name="fader-2", input="value", output="value", min=0, max=127},
+		{name="fader-3", input="value", output="value", min=0, max=127},
+		{name="fader-4", input="value", output="value", min=0, max=127},
+		{name="fader-5", input="value", output="value", min=0, max=127},
+		{name="fader-6", input="value", output="value", min=0, max=127},
+		{name="fader-7", input="value", output="value", min=0, max=127},
+		{name="fader-8", input="value", output="value", min=0, max=127},
 
--- Stores timestamp of last time knob/slider was moved on hardware.
-gLastAnalogMoveTime  = {}
+		{name="pan-1", input="value", output="value", min=0, max=127},
+		{name="pan-2", input="value", output="value", min=0, max=127},
+		{name="pan-3", input="value", output="value", min=0, max=127},
+		{name="pan-4", input="value", output="value", min=0, max=127},
+		{name="pan-5", input="value", output="value", min=0, max=127},
+		{name="pan-6", input="value", output="value", min=0, max=127},
+		{name="pan-7", input="value", output="value", min=0, max=127},
+		{name="pan-8", input="value", output="value", min=0, max=127},
 
--- Number of milliseconds to wait for a sent slider or knob value to be echoed back before reevaluating synchronization.
-gSentValueSettleTime = {}
+		{name="master-pan", input="value", output="value", min=0, max=127},
+		{name="master-volume", input="value", output="value", min=0, max=127},
 
--- Converts CC numbers to slider/knob numbers.
-gAnalogCCLookup =
+		-- index 51
+		{name="preset-jog-wheel", input="delta", output="value", min=0, max=127},
+		{name="preset-jog-wheel-button", input="button"},
+		{name="preset-prev", input="button", output="value"},
+		{name="preset-next", input="button", output="value"},
+
+		{name="part1-next", input="button", output="value"},
+		{name="part2-prev", input="button", output="value"},
+		{name="live-bank", input="button", output="value"},
+
+		{name="cat-jog-wheel", input="delta", output="value", min=0, max=127},
+		{name="cat-jog-wheel-button", input="button"},
+		{name="cat-prev", input="button", output="value"},
+		{name="cat-next", input="button", output="value"},
+
+		{name="left-arrow", input="button", output="value"},
+		{name="right-arrow", input="button", output="value"},
+
+		-- index is 57
+		{name="pan-1-var-a", input="value", output="value", min=0, max=127},
+		{name="pan-2-var-a", input="value", output="value", min=0, max=127},
+		{name="pan-3-var-a", input="value", output="value", min=0, max=127},
+		{name="pan-4-var-a", input="value", output="value", min=0, max=127},
+		{name="pan-5-var-a", input="value", output="value", min=0, max=127},
+		{name="pan-6-var-a", input="value", output="value", min=0, max=127},
+		{name="pan-7-var-a", input="value", output="value", min=0, max=127},
+		{name="pan-8-var-a", input="value", output="value", min=0, max=127},
+		{name="master-pan-var-a", input="value", output="value", min=0, max=127},
+
+		-- index is 66
+		{name="pan-1-var-b", input="value", output="value", min=0, max=127},
+		{name="pan-2-var-b", input="value", output="value", min=0, max=127},
+		{name="pan-3-var-b", input="value", output="value", min=0, max=127},
+		{name="pan-4-var-b", input="value", output="value", min=0, max=127},
+		{name="pan-5-var-b", input="value", output="value", min=0, max=127},
+		{name="pan-6-var-b", input="value", output="value", min=0, max=127},
+		{name="pan-7-var-b", input="value", output="value", min=0, max=127},
+		{name="pan-8-var-b", input="value", output="value", min=0, max=127},
+		{name="master-pan-var-b", input="value", output="value", min=0, max=127},
+
+		-- index is 75
+		{name="pan-1-var-c", input="value", output="value", min=0, max=127},
+		{name="pan-2-var-c", input="value", output="value", min=0, max=127},
+		{name="pan-3-var-c", input="value", output="value", min=0, max=127},
+		{name="pan-4-var-c", input="value", output="value", min=0, max=127},
+		{name="pan-5-var-c", input="value", output="value", min=0, max=127},
+		{name="pan-6-var-c", input="value", output="value", min=0, max=127},
+		{name="pan-7-var-c", input="value", output="value", min=0, max=127},
+		{name="pan-8-var-c", input="value", output="value", min=0, max=127},
+		{name="master-pan-var-c", input="value", output="value", min=0, max=127},
+
+		-- index is 84
+		{name="pan-1-var-d", input="value", output="value", min=0, max=127},
+		{name="pan-2-var-d", input="value", output="value", min=0, max=127},
+		{name="pan-3-var-d", input="value", output="value", min=0, max=127},
+		{name="pan-4-var-d", input="value", output="value", min=0, max=127},
+		{name="pan-5-var-d", input="value", output="value", min=0, max=127},
+		{name="pan-6-var-d", input="value", output="value", min=0, max=127},
+		{name="pan-7-var-d", input="value", output="value", min=0, max=127},
+		{name="pan-8-var-d", input="value", output="value", min=0, max=127},
+		{name="master-pan-var-d", input="value", output="value", min=0, max=127},
+
+	}
+
+	local inputs =
+	{
+		{pattern="e? xx yy", name="Pitch Bend", value="y*128 + x"},
+		{pattern="b0 01 xx", name="Mod Wheel"},
+		{pattern="b0 0b xx", name="Expression"},
+		{pattern="b0 02 xx", name="Breath"},
+		{pattern="d0 xx", name="Channel Pressure"},
+		{pattern="b0 40 xx", name="Damper Pedal"},
+		{pattern="<100x>0 yy zz", name="Keyboard"},
+
+		--[[
+		{pattern="<100y>0 24 xx", name="pad-1"},
+		{pattern="<100y>0 25 xx", name="pad-2"},
+		{pattern="<100y>0 26 xx", name="pad-3"},
+		{pattern="<100y>0 27 xx", name="pad-4"},
+		{pattern="<100y>0 28 xx", name="pad-5"},
+		{pattern="<100y>0 29 xx", name="pad-6"},
+		{pattern="<100y>0 2a xx", name="pad-7"},
+		{pattern="<100y>0 2b xx", name="pad-8"},
+		{pattern="<100y>0 2c xx", name="pad-9"},
+		{pattern="<100y>0 2d xx", name="pad-10"},
+		{pattern="<100y>0 2e xx", name="pad-11"},
+		{pattern="<100y>0 2f xx", name="pad-12"},
+		{pattern="<100y>0 00 xx", name="pad-13"},
+		{pattern="<100y>0 31 xx", name="pad-14"},
+		{pattern="<100y>0 32 xx", name="pad-15"},
+		{pattern="<100y>0 33 xx", name="pad-16"},
+		]]
+
+		{pattern="b? 49 xx", name="fader-1", value="x"},
+		{pattern="b? 4b xx", name="fader-2", value="x"},
+		{pattern="b? 4f xx", name="fader-3", value="x"},
+		{pattern="b? 48 xx", name="fader-4", value="x"},
+		{pattern="b? 50 xx", name="fader-5", value="x"},
+		{pattern="b? 51 xx", name="fader-6", value="x"},
+		{pattern="b? 52 xx", name="fader-7", value="x"},
+		{pattern="b? 53 xx", name="fader-8", value="x"},
+
+		{pattern="b? 4a xx", name="pan-1", value="x"},
+		{pattern="b? 47 xx", name="pan-2", value="x"},
+		{pattern="b? 4c xx", name="pan-3", value="x"},
+		{pattern="b? 4d xx", name="pan-4", value="x"},
+		{pattern="b? 5d xx", name="pan-5", value="x"},
+		{pattern="b? 12 xx", name="pan-6", value="x"},
+		{pattern="b? 13 xx", name="pan-7", value="x"},
+		{pattern="b? 10 xx", name="pan-8", value="x"},
+
+		{pattern="b? 11 xx", name="master-pan", value="x"},
+		{pattern="b? 55 xx", name="master-volume", value="x"},
+
+		{pattern="b? 72 <?y??><???x>", name="preset-jog-wheel", value="x*(2*y-1)"},  -- when "Preset" is selected, 41 <0100><0001>   ou  3f <0011><1111>
+		{pattern="b? 73 xx", name="preset-jog-wheel-button", value="x"},	-- When "Preset" is selected
+		-- {pattern="b? 72 3f", name="preset-prev", value="1"},
+		-- {pattern="b? 72 41", name="preset-next", value="1"},
+
+		{pattern="b? 70 <?y??><???x>", name="cat-jog-wheel", value="x*(2*y-1)"},  -- when "Cat" is selected, 41 <0100><0001>   ou  3f <0011><1111>
+		{pattern="b? 71 xx", name="cat-jog-wheel-button", value="x"},	-- when "Cat" is selected
+		-- {pattern="b? 70 3f", name="cat-prev", value="1"},
+		-- {pattern="b? 70 41", name="cat-next", value="1"},
+
+		{pattern="b? 16 xx", name="part1-next", value="x"},
+		{pattern="b? 17 xx", name="part2-prev", value="x"},
+		{pattern="b? 18 xx", name="live-bank", value="x"},
+
+		{pattern="b? 1c xx", name="left-arrow", value="x"},
+		{pattern="b? 1d xx", name="right-arrow", value="x"},
+	}
+
+	--Auto outputs
+	local outputs =
+	{
+		{name="pan-1", pattern="b? 4a xx"},
+		{name="pan-2", pattern="b? 47 xx"},
+		{name="pan-3", pattern="b? 4c xx"},
+		{name="pan-4", pattern="b? 4d xx"},
+		{name="pan-5", pattern="b? 5d xx"},
+		{name="pan-6", pattern="b? 12 xx"},
+		{name="pan-7", pattern="b? 13 xx"},
+		{name="pan-8", pattern="b? 10 xx"},
+		{name="master-pan", pattern="b? 11 xx"},
+
+		{name="fader-1", pattern="b? 49 xx"},
+		{name="fader-2", pattern="b? 4b xx"},
+		{name="fader-4", pattern="b? 48 xx"},
+		{name="fader-5", pattern="b? 50 xx"},
+		{name="fader-6", pattern="b? 51 xx"},
+		{name="fader-7", pattern="b? 52 xx"},
+		{name="fader-8", pattern="b? 53 xx"},
+		{name="master-volume", pattern="b? 55 xx"},
+
+		{name="part1-next", pattern="b? 16 xx"},
+		{name="part2-prev", pattern="b? 17 xx"},
+		{name="live-bank", pattern="b? 18 xx"},
+	}
+
+	remote.define_items(items)
+	remote.define_auto_inputs(inputs)
+	remote.define_auto_outputs(outputs)
+end
+
+
+encoder_patterns =
 {
-	[21] = 1,
-	[22] = 2,
-	[23] = 3,
-	[24] = 4,
-	[25] = 5,
-	[26] = 6,
-	[27] = 7,
-	[28] = 8,
-	[29] = 9, -- Sliders 1-9
-	[48] = 10,
-	[49] = 11,
-	[50] = 12,
-	[51] = 13,
-	[52] = 14,
-	[53] = 15,
-	[54] = 16,
-	[55] = 17,
-	[56] = 18, -- Sliders 10-18
-	[75] = 19,
-	[76] = 20,
-	[77] = 21,
-	[78] = 22,
-	[79] = 23,
-	[80] = 24,
-	[81] = 25,
-	[82] = 26,
-	[83] = 27 -- Sliders 19-27
+	"b? 4a xx", -- pan-1
+	"b? 47 xx", -- pan-2
+	"b? 4c xx", -- pan-3
+	"b? 4d xx", -- pan-4
+	"b? 5d xx", -- pan-5
+	"b? 12 xx", -- pan-6
+	"b? 13 xx", -- pan-7
+	"b? 10 xx", -- pan-8
+	"b? 11 xx", -- master pan
 }
 
 
------------------------------------------------ Global Helpers ----------------------------------------------------
-
-function fromHex(nr)
-	return tonumber(nr, 16)
-end
-
-
-function toHex(nr)
-	return string.format("%02x", nr)
-end
-
-
------------------------------------------------ Remote Init -------------------------------------------------------
-
-function remote_init(manufacturer, model)
-	local globalItems       = {}
-	local globalAutoInputs  = {}
-	local globalAutoOutputs = {}
-
-	---------- Helper Functions ----------
-
-	local function makeButtonInputMask(controlID)
-		local mask = "b?" .. toHex(controlID) .. "?<???x>"
-		return mask
-	end
-
-	local function makeEncoderInputMask(controlID)
-		local mask = "b?" .. toHex(controlID) .. "<???y>x"
-		return mask
-	end
-
-
-	---------- Define Controls ----------
-
-	local function defineControlInputs()
-		local inputDefs =
-		{
-			{ id = fromHex("0C"), name = "Encoder1 B1", type = "encoder" }, -- 12
-			{ id = fromHex("0D"), name = "Encoder2 B1", type = "encoder" }, -- 13
-			{ id = fromHex("0E"), name = "Encoder3 B1", type = "encoder" }, -- 14
-			{ id = fromHex("0F"), name = "Encoder4 B1", type = "encoder" }, -- 15
-			{ id = fromHex("10"), name = "Encoder5 B1", type = "encoder" }, -- 16
-			{ id = fromHex("11"), name = "Encoder6 B1", type = "encoder" }, -- 17
-			{ id = fromHex("12"), name = "Encoder7 B1", type = "encoder" }, -- 18
-			{ id = fromHex("13"), name = "Encoder8 B1", type = "encoder" }, -- 19
-			{ id = fromHex("14"), name = "Encoder9 B1", type = "encoder" }, -- 20
-			{ id = fromHex("27"), name = "Encoder1 B2", type = "encoder" }, -- 39
-			{ id = fromHex("28"), name = "Encoder2 B2", type = "encoder" }, -- 40
-			{ id = fromHex("29"), name = "Encoder3 B2", type = "encoder" }, -- 41
-			{ id = fromHex("2A"), name = "Encoder4 B2", type = "encoder" }, -- 42
-			{ id = fromHex("2B"), name = "Encoder5 B2", type = "encoder" }, -- 43
-			{ id = fromHex("2C"), name = "Encoder6 B2", type = "encoder" }, -- 44
-			{ id = fromHex("2D"), name = "Encoder7 B2", type = "encoder" }, -- 45
-			{ id = fromHex("2E"), name = "Encoder8 B2", type = "encoder" }, -- 46
-			{ id = fromHex("2F"), name = "Encoder9 B2", type = "encoder" }, -- 47
-			{ id = fromHex("42"), name = "Encoder1 B3", type = "encoder" }, -- 66
-			{ id = fromHex("43"), name = "Encoder2 B3", type = "encoder" }, -- 67
-			{ id = fromHex("44"), name = "Encoder3 B3", type = "encoder" }, -- 68
-			{ id = fromHex("45"), name = "Encoder4 B3", type = "encoder" }, -- 69
-			{ id = fromHex("46"), name = "Encoder5 B3", type = "encoder" }, -- 70
-			{ id = fromHex("47"), name = "Encoder6 B3", type = "encoder" }, -- 71
-			{ id = fromHex("48"), name = "Encoder7 B3", type = "encoder" }, -- 72
-			{ id = fromHex("49"), name = "Encoder8 B3", type = "encoder" }, -- 73
-			{ id = fromHex("4A"), name = "Encoder9 B3", type = "encoder" }, -- 74
-
-			{ id = fromHex("15"), name = "Slider1 B1", type = "slider" },   -- 21
-			{ id = fromHex("16"), name = "Slider2 B1", type = "slider" },   -- 22
-			{ id = fromHex("17"), name = "Slider3 B1", type = "slider" },   -- 23
-			{ id = fromHex("18"), name = "Slider4 B1", type = "slider" },   -- 24
-			{ id = fromHex("19"), name = "Slider5 B1", type = "slider" },   -- 25
-			{ id = fromHex("1A"), name = "Slider6 B1", type = "slider" },   -- 26
-			{ id = fromHex("1B"), name = "Slider7 B1", type = "slider" },   -- 27
-			{ id = fromHex("1C"), name = "Slider8 B1", type = "slider" },   -- 28
-			{ id = fromHex("1D"), name = "Slider9 B1", type = "slider" },   -- 29
-			{ id = fromHex("30"), name = "Slider1 B2", type = "slider" },   -- 48
-			{ id = fromHex("31"), name = "Slider2 B2", type = "slider" },   -- 49
-			{ id = fromHex("32"), name = "Slider3 B2", type = "slider" },   -- 50
-			{ id = fromHex("33"), name = "Slider4 B2", type = "slider" },   -- 51
-			{ id = fromHex("34"), name = "Slider5 B2", type = "slider" },   -- 52
-			{ id = fromHex("35"), name = "Slider6 B2", type = "slider" },   -- 53
-			{ id = fromHex("36"), name = "Slider7 B2", type = "slider" },   -- 54
-			{ id = fromHex("37"), name = "Slider8 B2", type = "slider" },   -- 55
-			{ id = fromHex("38"), name = "Slider9 B2", type = "slider" },   -- 56
-			{ id = fromHex("4B"), name = "Slider1 B3", type = "slider" },   -- 75
-			{ id = fromHex("4C"), name = "Slider2 B3", type = "slider" },   -- 76
-			{ id = fromHex("4D"), name = "Slider3 B3", type = "slider" },   -- 77
-			{ id = fromHex("4E"), name = "Slider4 B3", type = "slider" },   -- 78
-			{ id = fromHex("4F"), name = "Slider5 B3", type = "slider" },   -- 79
-			{ id = fromHex("50"), name = "Slider6 B3", type = "slider" },   -- 80
-			{ id = fromHex("51"), name = "Slider7 B3", type = "slider" },   -- 81
-			{ id = fromHex("52"), name = "Slider8 B3", type = "slider" },   -- 82
-			{ id = fromHex("53"), name = "Slider9 B3", type = "slider" },   -- 83
-
-			{ id = fromHex("1E"), name = "Select1 B1", type = "button" },   -- 30
-			{ id = fromHex("1F"), name = "Select2 B1", type = "button" },   -- 31
-			{ id = fromHex("20"), name = "Select3 B1", type = "button" },   -- 32
-			{ id = fromHex("21"), name = "Select4 B1", type = "button" },   -- 33
-			{ id = fromHex("22"), name = "Select5 B1", type = "button" },   -- 34
-			{ id = fromHex("23"), name = "Select6 B1", type = "button" },   -- 35
-			{ id = fromHex("24"), name = "Select7 B1", type = "button" },   -- 36
-			{ id = fromHex("25"), name = "Select8 B1", type = "button" },   -- 37
-			{ id = fromHex("26"), name = "Select9 B1", type = "button" },   -- 38
-			{ id = fromHex("39"), name = "Select1 B2", type = "button" },   -- 57
-			{ id = fromHex("3A"), name = "Select2 B2", type = "button" },   -- 58
-			{ id = fromHex("3B"), name = "Select3 B2", type = "button" },   -- 59
-			{ id = fromHex("3C"), name = "Select4 B2", type = "button" },   -- 60
-			{ id = fromHex("3D"), name = "Select5 B2", type = "button" },   -- 61
-			{ id = fromHex("3E"), name = "Select6 B2", type = "button" },   -- 62
-			{ id = fromHex("3F"), name = "Select7 B2", type = "button" },   -- 63
-			{ id = fromHex("40"), name = "Select8 B2", type = "button" },   -- 64
-			{ id = fromHex("41"), name = "Select9 B2", type = "button" },   -- 65
-			{ id = fromHex("54"), name = "Select1 B3", type = "button" },   -- 84
-			{ id = fromHex("55"), name = "Select2 B3", type = "button" },   -- 85
-			{ id = fromHex("56"), name = "Select3 B3", type = "button" },   -- 86
-			{ id = fromHex("57"), name = "Select4 B3", type = "button" },   -- 87
-			{ id = fromHex("58"), name = "Select5 B3", type = "button" },   -- 88
-			{ id = fromHex("59"), name = "Select6 B3", type = "button" },   -- 89
-			{ id = fromHex("5A"), name = "Select7 B3", type = "button" },   -- 90
-			{ id = fromHex("5B"), name = "Select8 B3", type = "button" },   -- 91
-			{ id = fromHex("5C"), name = "Select9 B3", type = "button" }    -- 92
-		}
-
-		for k, v in pairs(inputDefs) do
-			local itemName = v.name
-			local itemID = v.id
-			if (v.type == "button") then
-				table.insert(globalItems,       { name = itemName, input = "button"                                         })
-				table.insert(globalAutoInputs,  { name = itemName, pattern = makeButtonInputMask(itemID),  value = "x"      })
-				-- No output as it isn't changing button's lighted status on the KeyLab
-			elseif (v.type == "encoder") then
-				table.insert(globalItems,       { name = itemName, input = "delta"                                          })
-				table.insert(globalAutoInputs,  { name = itemName, pattern = makeEncoderInputMask(itemID), value = "x-16*y" })
-				-- No output as there isn't anything to change on the KeyLab
-			elseif (v.type == "slider") then
-				table.insert(globalItems,       { name = itemName, input = "value", output = "value", min = 0, max = 127    })
-				-- No auto-input as the sliders are handled below in remote_process_midi to enable soft pickup
-			else
-				-- don't have anything else to process
-			end
+-- Return the encoder that has been activated (1 to 8 and 9 for the master-pan) or -1 if any
+function incomingMidiMessageFromEncoder(event)
+	for key,value in ipairs(encoder_patterns) do
+		ret = remote.match_midi(value,event)
+		if ret~=nil then
+			return key
 		end
 	end
-
-	--------------------------------------------------------------------------------------------------------------
-
-    defineControlInputs()
-	
-	remote.define_items(globalItems)
-	remote.define_auto_inputs(globalAutoInputs)
-	remote.define_auto_outputs(globalAutoOutputs)
+	return -1
 end
 
 
------------------------------------------------ Control Input Logic -----------------------------------------------
+function remote_process_midi(event)  -- handle incoming midi event
+	--test if preset jog-wheel turn right
+	--ret = remote.match_midi("b? 72 41",event)
+	--if ret~=nil then
+	--	remote.trace(" Send preset-next to Reason\n")
+	--	local msg={ time_stamp=event.time_stamp, item=47, value=1 }
+	--	remote.handle_input(msg)
+	--	return true
+	--end
 
--- Set up slider/knob tracking arrays.
-for i = 1, gNumberOfAnalogs do
-	gAnalogPhysicalState[i] = 0
-	gAnalogMachineState[i]  = 0
-	gAnalogMismatch[i]      = nil
-	gLastAnalogMoveTime[i]  = 0
-	gSentValueSettleTime[i] = 250
-end
+	--test if preset jog-wheel turn left
+	--ret = remote.match_midi("b? 72 3f",event)
+	--if ret~=nil then
+	--	remote.trace(" Send preset-prev to Reason\n")
+	--	local msg={ time_stamp=event.time_stamp, item=46, value=1 }
+	--	remote.handle_input(msg)
+	--	return true
+	--end
 
+	local tab_index = {Chorus = 57, BDD = 66, FFT = 75, Grain = 84}
 
- -- Manual handling of incoming values sent by controller.
-function remote_process_midi(event)
-	-- Check for analog Messages.
-	ret = remote.match_midi("B0 yy xx", event)
-	if ret ~= nil then
-		-- Catch knob events
-		-- Try to get the analog number that corresponds to the received Continuous Controller message.
-		local AnalogNum = gAnalogCCLookup[ret.y]
-		-- Try to get the analog number that corresponds to the received Continuous Controller message.
-		-- If message isn't from an analog ...
-		if AnalogNum == nil then
-			-- ... pass it on to auto input handling.
-			return false
-		else
-			-- Update the stored physical state to the incoming value.
-			gAnalogPhysicalState[AnalogNum] = ret.x
-			-- We'll send the incoming value to the host unless we find a reason not to.
-			local AllowChange = true
+	if string.starts(g_lcd_line1_new_text,"Quartet") then
+		local encoder_number = incomingMidiMessageFromEncoder(event) -- which encoder number send midi ?
+		local item_to_activate
 
-			-- Assess conditions if controller and software values are mismatched.
-			if gAnalogMismatch[AnalogNum] ~= 0 then
-				-- Startup condition: analog hasn't reported in yet.
-				if gAnalogMismatch[AnalogNum] == nil then
-					-- Calculate and store how physical and machine states relate to each other.
-					gAnalogMismatch[AnalogNum] = gAnalogPhysicalState[AnalogNum] - gAnalogMachineState[AnalogNum]
-					-- Calculate and store how physical and machine states relate to each other.
-					-- If the physical value is too far from the machine value.
-					if math.abs(gAnalogMismatch[AnalogNum]) > gStartupLiveband then
-						AllowChange = false -- don't send it to Reason
-					end
-				 -- If physical state of analog was and still is above virtual value.
-				elseif gAnalogMismatch[AnalogNum] > 0 and gAnalogPhysicalState[AnalogNum] - gAnalogMachineState[AnalogNum] > 0 then
-					 -- Don't send the new value to Reason because it's out of sync.
-					AllowChange = false
-				 -- If physical state of analog was and still is below virtual value.
-				elseif gAnalogMismatch[AnalogNum] < 0 and gAnalogPhysicalState[AnalogNum] - gAnalogMachineState[AnalogNum] < 0 then
-					-- Don't send the updated value.
-					AllowChange = false
-				end
+		-- tell reason to process the translated incoming midi message
+		if encoder_number > 0 then
+
+			-- handle midi msg depending on selected effect on Quartet
+			if g_quartet_effect_selected == "Chorus" then
+				item_to_activate = tab_index.Chorus + (encoder_number-1)
+			elseif g_quartet_effect_selected == "BBD" then
+				item_to_activate = tab_index.BDD + (encoder_number-1)
+			elseif g_quartet_effect_selected == "FFT" then
+				item_to_activate = tab_index.FFT + (encoder_number-1)
+			elseif g_quartet_effect_selected == "Grain" then
+				item_to_activate = tab_index.Grain + (encoder_number-1)
 			end
 
-			 -- If the incoming change should be sent to Reason.
-			if AllowChange then
-				 -- Send the new analog value to Reason.
-				remote.handle_input({ time_stamp = event.time_stamp, item = gFirstAnalogIndex + AnalogNum - 1, value = ret.x })
-				-- Store the time this change was sent.
-				gLastAnalogMoveTime[AnalogNum] = remote.get_time_ms()
-				-- And set the flag to show the controller and Reason are in sync.
-				gAnalogMismatch[AnalogNum] = 0
+			-- decode the incoming midi message for the activated encoder
+			ret = remote.match_midi(encoder_patterns[encoder_number],event)
+			if ret~=nil then
+				msg={ time_stamp=event.time_stamp, item=item_to_activate, value=ret.x }
+				remote.handle_input(msg)
+				return true
 			end
-			 -- Input has been handled.
-			return true
 		end
 	end
 	return false
 end
 
 
- -- Handle incoming changes sent by Reason.
-function remote_set_state(changed_items)
-	for i, item_index in ipairs(changed_items) do
-		 -- Calculate which analog (if any) the index of the changed item indicates.
-		local AnalogNum = item_index - gFirstAnalogIndex + 1
-		 -- If change belongs to an analog control ...
-		if AnalogNum >= 1 and AnalogNum <= gNumberOfAnalogs then
-			 -- ... update the machine state for the analog.
-			gAnalogMachineState[AnalogNum] = remote.get_item_value(item_index)
-			 -- If we know the analog's physical state ...
-			if gAnalogMismatch[AnalogNum] ~= nil then
-				 -- And the last value it sent to Reason happened outside the settle time ...
-				if (remote.get_time_ms() - gLastAnalogMoveTime[AnalogNum]) > gSentValueSettleTime[AnalogNum] then
-					 -- ... recalculate and store how physical and machine states relate to each other.
-					gAnalogMismatch[AnalogNum] = gAnalogPhysicalState[AnalogNum] - gAnalogMachineState[AnalogNum]
+g_rv7_algorithms = { "Hall", "Large Hall", "Hall 2", "Large Room", "Medium Room", "Small Room", "Gated", "Low Density","Stereo Echoes","Pan Room"}
+g_matrix_bank = { "A", "B", "C", "D"}
+
+
+function remote_set_state(changed_items) --handle incoming changes sent by Reason
+	for i,item_index in ipairs(changed_items) do
+		-- if i==0 then g_lcd_line2_new_text = '!'; end
+		if item_index==g_lcd_line1_index then
+			--g_is_lcd_enabled=remote.is_item_enabled(item_index)
+			g_lcd_line1_new_text=remote.get_item_text_value(item_index)
+		end
+
+		if item_index==g_lcd_line2_index then
+			--g_is_lcd_enabled=remote.is_item_enabled(item_index)
+			g_lcd_line2_new_text=remote.get_item_text_value(item_index)
+		end
+
+		if item_index==g_preset_jog_wheel_index then
+			if g_lcd_line1_new_text == "RV-7 (reverb)" then
+				g_lcd_line2_new_text = g_rv7_algorithms[remote.get_item_text_value(item_index)+1]
+			end
+
+			if g_lcd_line1_new_text == "Matrix" then
+				bank = math.floor(remote.get_item_text_value(item_index) / 8) +1
+				if bank == 0 then
+					g_lcd_line2_new_text = "Bank - / Pat. -"
+				else
+					pattern = remote.get_item_text_value(item_index) - ((bank-1)*8) +1
+					g_lcd_line2_new_text = "Bank "..g_matrix_bank[bank].." / Pat. "..pattern
 				end
+			end
+
+			if g_lcd_line1_new_text == "Audiomatic" then
+				g_lcd_line2_new_text = remote.get_item_text_value(item_index)
+			end
+		end
+
+		if string.starts(g_lcd_line1_new_text,"Quartet") then
+			if item_index==g_cat_jog_wheel_index then
+				g_quartet_effect_selected = remote.get_item_text_value(item_index)
+				g_lcd_line1_new_text = "Quartet ("..g_quartet_effect_selected..")"
+			end
+		end
+
+		if string.starts(g_lcd_line1_new_text,"Sweeper") then
+			if item_index==g_cat_jog_wheel_index then
+				g_sweeper_effect_selected = remote.get_item_text_value(item_index)
+				g_lcd_line1_new_text = "Sweeper("..g_sweeper_effect_selected..")"
 			end
 		end
 	end
 end
 
 
-function remote_probe()
-	local controlRequest  = "F0 7E 7F 06 01 F7"
-	local controlResponse = "F0 7E 7F 06 02 00 20 6B 02 00 05 64 ?? ?? ?? ?? F7"
-	return { request = controlRequest, response = controlResponse }
+function remote_deliver_midi(max_bytes, port)
+	local ret_events={}
+
+	-- if there is a new message to display
+	if (g_lcd_line1_new_text ~= g_lcd_line1_old_text) then
+		g_lcd_line1_old_text = g_lcd_line1_new_text
+		table.insert(ret_events,make_lcd_midi_message(g_lcd_line1_new_text, g_lcd_line2_old_text))
+	end
+
+	-- if there is a new message to display
+	if (g_lcd_line2_new_text ~= g_lcd_line2_old_text) then
+		g_lcd_line2_old_text = g_lcd_line2_new_text
+		table.insert(ret_events,make_lcd_midi_message(g_lcd_line1_old_text, g_lcd_line2_new_text))
+	end
+
+	return ret_events
 end
 
 
-function trace_event(event)
-	result = "Event: "
-	result = result .. "port " .. event.port .. ", "
-	result = result .. (event.timestamp and ("timestamp " .. event.timestamp .. ", ") or "")
-	result = result .. (event.hi and ("hi " .. event.hi .. ", ") or "")
-	result = result .. (event.lo and ("lo " .. event.lo .. ", ") or "")
-	result = result .. (event.size and ("size " .. event.size .. ", ") or "")
-	result = result .. "data {"
-	for i = 1, event.size do
-		result = result .. event[i] .. ", "
+function remote_probe(manufacturer,model,prober)
+	-- Arturia Manufacturer SysEx ID Numbers is: 00 20 6b
+
+	-- Need to be rework, for hardware with multiple ports must be done programaticaly (see Remote SDK documentation page 26 & 27)
+	assert(model == "Keylab61 Essential")
+	local controlRequest="f0 7e 7f 06 01 f7"  -- sysex de demande d'identification
+	local controlResponse="F0 7E 7F 06 02 00 20 6B 02 00 05 54 3D 02 01 01 F7"
+	return {
+		request=controlRequest,
+		response=controlResponse
+	}
+end
+
+
+function remote_prepare_for_use()
+	local retEvents={
+		-- Display message on LCD
+		make_lcd_midi_message("Reason Remote", "connected"),
+	}
+	return retEvents
+end
+
+
+function remote_release_from_use()
+	local retEvents={
+		-- Display message on LCD
+		make_lcd_midi_message("Reason Remote", "disconnected"),
+	}
+	return retEvents
+end
+
+
+function stringToHex(text)
+	local hexStringToReturn = ""
+	for i=1, string.len(text) do
+		if string.len(hexStringToReturn) > 0 then
+			hexStringToReturn = hexStringToReturn .. " "
+		end
+		hexStringToReturn = hexStringToReturn .. string.format("%X", string.byte(text,i))
 	end
-	result = result .. "}, "
-	remote.trace(result)
+	return hexStringToReturn
+end
+
+
+function make_lcd_midi_message(line1, line2)
+	local sysex = "f0 00 20 6b 7f 42 04 00 60 01" .. stringToHex(string.sub(line1,1,16)) .. " 00 02" .. stringToHex(string.sub(line2,1,16)) .. " 00 f7"
+	local event=remote.make_midi(sysex)
+	return event
+end
+
+
+function string.starts(String,Start)
+	return string.sub(String,1,string.len(Start)) == Start
 end
